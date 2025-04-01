@@ -2,7 +2,7 @@
 import { useState, ChangeEvent } from 'react';
 
 export default function Home() {
-  const API_URL = "https://upload.imagedelivery.net/74681b1257b9e7257184cf2928ba7f0a";
+  const API_URL = "https://api.cloudflare.com/client/v4/accounts/74681b1257b9e7257184cf2928ba7f0a/images/v1";
   const TOKEN = "hhBhxJPWZ2t57AfLECuPsE8PR3YQrmG0bwEnUwSQ";
 
   const [file, setFile] = useState<File | null>(null);
@@ -22,13 +22,14 @@ export default function Home() {
     const bytes = new Uint8Array(arrayBuffer);
 
     const formData = new FormData();
-    formData.append('file', new File([bytes], file.name, { type: file.type }));
+    formData.append('file', new File([bytes], file.name, { type: file.type }), 'image.jpg');
 
     try {
       const response = await fetch(API_URL, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${TOKEN}`,
+          'Content-Type': 'multipart/form-data',
         },
         body: formData,
       });
