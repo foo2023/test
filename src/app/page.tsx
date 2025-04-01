@@ -2,7 +2,7 @@
 import { useState, ChangeEvent } from 'react';
 
 export default function Home() {
-  const API_URL = "https://api.cloudflare.com/client/v4/accounts/74681b1257b9e7257184cf2928ba7f0a/images/v1";
+  const API_URL = "https://upload.imagedelivery.net/74681b1257b9e7257184cf2928ba7f0a";
   const TOKEN = "hhBhxJPWZ2t57AfLECuPsE8PR3YQrmG0bwEnUwSQ";
 
   const [file, setFile] = useState<File | null>(null);
