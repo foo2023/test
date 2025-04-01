@@ -1,6 +1,6 @@
 'use client';
 import Image from "next/image";
-import { useState } from 'react';
+import { useState, ChangeEvent } from 'react';
 
 export default function Home() {
   const API_URL = "https://api.cloudflare.com/client/v4/accounts/74681b1257b9e7257184cf2928ba7f0a/images/v1";
@@ -9,7 +9,7 @@ export default function Home() {
   const [file, setFile] = useState(null);
 
   // 处理文件选择
-  const handleFileChange = (event) => {
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     setFile(event.target.files[0]);
   };
 
@@ -24,13 +24,24 @@ export default function Home() {
     const formData = new FormData();
     formData.append('file', new File([bytes], 'image.png'));
 
-    const response = await fetch(API_URL, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${TOKEN}`,
-      },
-      body: formData,
-    });
+    try {
+      const response = await fetch(API_URL, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${TOKEN}`,
+        },
+        body: formData,
+      });
+      
+      if (response.ok) {
+        alert('文件上傳成功');
+      } else {
+        alert('文件上傳失敗');
+      }
+    } catch (error) {
+      console.error('上傳錯誤:', error);
+      alert('上傳過程發生錯誤');
+    }
   }
   return (
     <div>
